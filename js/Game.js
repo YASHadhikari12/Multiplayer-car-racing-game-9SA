@@ -7,8 +7,9 @@ class Game {
 
     this.leader1 = createElement("h2");
     this.leader2 = createElement("h2");
+  
+this.playerMoving=false
   }
-
   getState() {
     var gameStateRef = database.ref("gameState");
     gameStateRef.on("value", function(data) {
@@ -96,6 +97,7 @@ class Game {
       image(track, 0, -height * 5, width, height * 6);
       this.showLeaderboard();
       this.showLife();
+      this.showfuelBar()
       //index of the array
       var index = 0;
       for (var plr in allPlayers) {
@@ -123,8 +125,13 @@ class Game {
           camera.position.y = cars[index - 1].position.y;
 
         }
+
       }
 
+      if(this.playerMoving){
+        player.positionY+=5
+        player.update
+      }
       // handling keyboard events
       if (keyIsDown(UP_ARROW)) {
         player.positionY += 10;
@@ -153,6 +160,14 @@ class Game {
       //the event
       collected.remove();
     });
+
+    if(player.fuel>0 && this.playerMoving){
+      player.fuel-=0.3
+    }
+    if(player.fuel<=0){
+      gameState=2
+      this.gameOver()
+    }
   }
 
   handlePowerCoins(index) {
@@ -228,9 +243,19 @@ showLeaderboard() {
   this.leader1.html(leader1);
   this.leader2.html(leader2);
 }
-
+showfuelBar(){
+  push()
+  image(fuelImage,width/2-130,height-player.positionY-100,20,20)
+  rect(width/2-100,height-player.positionY-100,185,20)
+  fill("white")
+  rect(width/2-100,height-player.positionY-100,player.fuel,20)
+fill("#f50057")
+noStroke()
+pop()
+}
 handlePlayerControls() {
   if (keyIsDown(UP_ARROW)) {
+    this.playerMoving=true
     player.positionY += 10;
     player.update();
   }
@@ -254,5 +279,16 @@ showRank() {
     imageSize: "100x100",
     confirmButtonText: "Ok"
   });
+}
+gameOver(){
+  swal(
+    {
+      title:`gameOver`,
+      text:"you lose",
+      imageUrl:https:"//cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
+      imageSize:"100X100",
+      conformButtonText:"ök"
+    }
+  )
 }
 }
