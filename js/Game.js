@@ -285,7 +285,7 @@ gameOver(){
     {
       title:`gameOver`,
       text:"you lose",
-      imageUrl:https:"//cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
+      imageUrl:"https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
       imageSize:"100X100",
       conformButtonText:"ök"
     }
